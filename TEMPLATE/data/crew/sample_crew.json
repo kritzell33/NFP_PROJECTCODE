@@ -1,0 +1,60 @@
+{
+  "crew": [
+    {
+      "id": "C001",
+      "name": "A. Okafor",
+      "traits": {
+        "PSY_RES": {"mean": 0.9, "sd": 0.30},
+        "PSY_CON": {"mean": 0.7, "sd": 0.25},
+        "SOC_COH": {"mean": 0.1, "sd": 0.35},
+        "SOC_AGR": {"mean": 0.3, "sd": 0.30},
+        "COG_TEC": {"mean": 1.1, "sd": 0.28},
+        "COG_ADP": {"mean": 0.6, "sd": 0.32},
+        "PHY_END": {"mean": 0.2, "sd": 0.30},
+        "LDR_INI": {"mean": 0.5, "sd": 0.33}
+      }
+    },
+    {
+      "id": "C002",
+      "name": "J. Marsh",
+      "traits": {
+        "PSY_RES": {"mean": -0.4, "sd": 0.40},
+        "PSY_CON": {"mean": 0.9, "sd": 0.24},
+        "SOC_COH": {"mean": -0.3, "sd": 0.38},
+        "SOC_AGR": {"mean": -0.5, "sd": 0.35},
+        "COG_TEC": {"mean": 0.8, "sd": 0.30},
+        "COG_ADP": {"mean": -0.2, "sd": 0.36},
+        "PHY_END": {"mean": 0.6, "sd": 0.29},
+        "LDR_INI": {"mean": 0.2, "sd": 0.34}
+      }
+    },
+    {
+      "id": "C003",
+      "name": "R. Devi",
+      "traits": {
+        "PSY_RES": {"mean": 0.4, "sd": 0.33},
+        "PSY_CON": {"mean": 0.1, "sd": 0.31},
+        "SOC_COH": {"mean": 1.0, "sd": 0.27},
+        "SOC_AGR": {"mean": 0.9, "sd": 0.26},
+        "COG_TEC": {"mean": 0.0, "sd": 0.35},
+        "COG_ADP": {"mean": 0.7, "sd": 0.30},
+        "PHY_END": {"mean": 0.4, "sd": 0.31},
+        "LDR_INI": {"mean": 0.6, "sd": 0.32}
+      }
+    },
+    {
+      "id": "C004",
+      "name": "T. Lindgren",
+      "traits": {
+        "PSY_RES": {"mean": 0.2, "sd": 0.45},
+        "PSY_CON": {"mean": -0.2, "sd": 0.40},
+        "SOC_COH": {"mean": 0.5, "sd": 0.33},
+        "SOC_AGR": {"mean": 0.2, "sd": 0.34},
+        "COG_TEC": {"mean": 0.5, "sd": 0.38},
+        "COG_ADP": {"mean": 1.0, "sd": 0.29},
+        "PHY_END": {"mean": 0.9, "sd": 0.27},
+        "LDR_INI": {"mean": -0.1, "sd": 0.41}
+      }
+    }
+  ]
+}

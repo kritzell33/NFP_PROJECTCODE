@@ -1,0 +1,16 @@
+# NFP Assessor - runtime dependencies (the shippable half of the suite).
+# Prefer `pip install -e ".[gui,dev]"` which reads pyproject.toml;
+# this file exists as a plain-pip fallback and for quick reference.
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+matplotlib>=3.8
+simpy>=4.1
+networkx>=3.2
+transitions>=0.9
+jinja2>=3.1
+py_trees>=2.2
+mesa>=3.0
+fpdf2>=2.7
+PySide6>=6.6
+pyqtgraph>=0.13

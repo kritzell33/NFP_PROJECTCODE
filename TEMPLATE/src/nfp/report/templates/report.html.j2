@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NFP Assessor — {{ scenario.name }}</title>
+<style>
+  :root {
+    --ink: #0B1D3A; --paper: #F7F6F2; --accent: #D9A441;
+    --good: #3E8E5A; --bad: #B4453A; --muted: #5B6B84;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif; line-height: 1.55;
+  }
+  header {
+    background: var(--ink); color: var(--paper);
+    padding: 36px 48px 28px;
+  }
+  header .kicker {
+    font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+  }
+  header h1 { margin: 6px 0 2px; font-size: 30px; font-weight: normal; }
+  header .sub { color: #B9C3D4; font-size: 14px; }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 48px 64px; }
+  h2 {
+    font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-top: 44px;
+  }
+  .headline {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px;
+  }
+  .stat {
+    flex: 1 1 180px; background: white; border: 1px solid #E3E1DA;
+    border-left: 4px solid var(--accent); padding: 14px 18px;
+  }
+  .stat .value { font-size: 26px; }
+  .stat .label {
+    font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+  }
+  .good { color: var(--good); } .bad { color: var(--bad); }
+  table {
+    border-collapse: collapse; width: 100%; margin-top: 12px;
+    font-size: 14px; background: white;
+  }
+  th, td { border: 1px solid #E3E1DA; padding: 7px 10px; text-align: left; }
+  th {
+    font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase; background: #EFEDE6;
+  }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  figure { margin: 18px 0; }
+  figure img { width: 100%; border: 1px solid #E3E1DA; background: white; }
+  .prov {
+    font-family: Consolas, monospace; font-size: 11px; color: var(--muted);
+    background: #EFEDE6; padding: 12px 16px; margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">New Frontier Project · Assessor</div>
+  <h1>{{ scenario.name }}</h1>
+  <div class="sub">{{ scenario.duration_days }}-day scenario · {{ crew|length }} crew ·
+    {{ provenance.n_runs }} simulated replications · seed {{ provenance.master_seed }}</div>
+</header>
+<main>
+
+  <div class="headline">
+    <div class="stat">
+      <div class="value {{ 'good' if p_cascade_free >= 0.9 else 'bad' }}">{{ p_cascade_free|pct }}</div>
+      <div class="label">Cascade-free missions</div>
+    </div>
+    <div class="stat">
+      <div class="value">{{ summary.completion_rate.mean|pct }}</div>
+      <div class="label">Mean task completion</div>
+    </div>
+    <div class="stat">
+      <div class="value">{{ summary.final_cohesion.mean|f2 }}</div>
+      <div class="label">Mean final cohesion</div>
+    </div>
+    <div class="stat">
+      <div class="value">{{ summary.conflict_events.mean|f2 }}</div>
+      <div class="label">Mean friction incidents</div>
+    </div>
+  </div>
+
+  <h2>Mission outcomes</h2>
+  <p>Distributions across all {{ provenance.n_runs }} replications. Each replication
+  draws a fresh trait vector for every crew member from their Bayesian posterior,
+  so the spread below reflects both scenario randomness <em>and</em> measurement
+  uncertainty about the candidates themselves.</p>
+  <figure><img src="data:image/png;base64,{{ figures.completion }}" alt="Completion distribution"></figure>
+  <figure><img src="data:image/png;base64,{{ figures.conflicts }}" alt="Conflict distribution"></figure>
+
+  <table>
+    <tr><th>Metric</th><th class="num">Mean</th><th class="num">SD</th>
+        <th class="num">5%</th><th class="num">95%</th></tr>
+    {% for name in ["completion_rate", "tasks_completed", "repairs_within_sla",
+                    "overdue_critical", "conflict_events", "final_cohesion",
+                    "mean_stress_final", "exhausted_agent_hours"] %}
+    <tr>
+      <td>{{ name.replace("_", " ") }}</td>
+      <td class="num">{{ summary[name].mean|f2 }}</td>
+      <td class="num">{{ summary[name].sd|f2 }}</td>
+      <td class="num">{{ summary[name].p05|f2 }}</td>
+      <td class="num">{{ summary[name].p95|f2 }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Crew dynamics</h2>
+  <figure><img src="data:image/png;base64,{{ figures.cohesion }}" alt="Cohesion trajectory"></figure>
+  <figure><img src="data:image/png;base64,{{ figures.stress }}" alt="Stress trajectories"></figure>
+
+  <h2>Candidate profiles &amp; archetype match</h2>
+  <p>Posterior trait summaries per candidate, and the probability that each
+  candidate's sampled trait profile meets or exceeds each archetype threshold
+  across replications.</p>
+  {% for cand in crew %}
+  <h3 style="margin-bottom:4px;">{{ cand.name }} <span style="color:var(--muted); font-size:13px;">({{ cand.id }})</span></h3>
+  <table>
+    <tr><th>Trait</th><th class="num">Posterior mean</th><th class="num">Posterior SD</th></tr>
+    {% for code, post in cand.traits.items() %}
+    <tr><td>{{ code }}</td>
+        <td class="num">{{ post["mean"]|f2 }}</td>
+        <td class="num">{{ post["sd"]|f2 }}</td></tr>
+    {% endfor %}
+  </table>
+  <table>
+    <tr><th>Archetype</th><th class="num">P(match)</th></tr>
+    {% for arch in archetypes %}
+    <tr><td>{{ arch.name }} <span style="color:var(--muted);">({{ arch.code }})</span></td>
+        <td class="num">{{ archetype_probs[cand.id][arch.code]|pct }}</td></tr>
+    {% endfor %}
+  </table>
+  {% endfor %}
+
+  <div class="prov">
+    Generated {{ provenance.generated_utc }} · Python {{ provenance.python }} ·
+    numpy {{ provenance.numpy }} · pandas {{ provenance.pandas }} ·
+    simpy {{ provenance.simpy }} · networkx {{ provenance.networkx }} ·
+    matplotlib {{ provenance.matplotlib }}<br>
+    Reproduce with: nfp run --runs {{ provenance.n_runs }} --seed {{ provenance.master_seed }}
+  </div>
+</main>
+</body>
+</html>

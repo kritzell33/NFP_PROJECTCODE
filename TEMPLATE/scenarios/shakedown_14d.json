@@ -1,0 +1,23 @@
+{
+  "name": "Habitat Shakedown (14-day)",
+  "duration_days": 14,
+  "resources": {
+    "workstations": 2,
+    "gym": 1
+  },
+  "tasks_per_day": {
+    "maintenance": 4,
+    "science": 4
+  },
+  "task_effort_h": {
+    "maintenance": 2.0,
+    "science": 4.0,
+    "repair": 3.0
+  },
+  "repair_sla_h": 12.0,
+  "event_rates": {
+    "equipment_failure": 0.65,
+    "medical_minor": 0.12,
+    "friction_base": 0.3
+  }
+}

@@ -1,0 +1,11 @@
+var_code,block,label,kind,scale_min,scale_max,reverse,description
+PSY_RES,PSY,Stress resilience,latent_trait,-3,3,0,Capacity to absorb acute and chronic stressors without performance degradation
+PSY_CON,PSY,Conscientiousness,latent_trait,-3,3,0,Task discipline and follow-through under routine load
+SOC_COH,SOC,Sociability,latent_trait,-3,3,0,Drive toward positive social contact and team bonding
+SOC_AGR,SOC,Agreeableness,latent_trait,-3,3,0,Interpersonal warmth and conflict-avoidance under strain
+COG_TEC,COG,Technical aptitude,latent_trait,-3,3,0,Speed and quality of technical task execution
+COG_ADP,COG,Adaptability,latent_trait,-3,3,0,Performance retention when conditions degrade
+PHY_END,PHY,Physical endurance,latent_trait,-3,3,0,Physical capacity and recovery through exercise
+LDR_INI,LDR,Initiative,latent_trait,-3,3,0,Propensity to self-assign work before being tasked
+OUT_COMP,OUT,Mission task completion,outcome,0,1,0,Fraction of generated tasks completed by mission end
+OUT_CASC,OUT,Critical cascade,outcome,0,1,0,Whether repair SLAs were blown twice or more in a mission

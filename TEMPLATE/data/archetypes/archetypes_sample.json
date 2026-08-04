@@ -1,0 +1,22 @@
+{
+  "archetypes": [
+    {
+      "code": "A-STEADY",
+      "name": "Steadfast Operator",
+      "weights": {"PSY_CON": 1.0, "PSY_RES": 0.8, "COG_TEC": 0.6},
+      "threshold": 0.45
+    },
+    {
+      "code": "A-BINDER",
+      "name": "Crew Binder",
+      "weights": {"SOC_COH": 1.0, "SOC_AGR": 0.9, "PSY_RES": 0.4},
+      "threshold": 0.40
+    },
+    {
+      "code": "A-SPARK",
+      "name": "Initiative Spark",
+      "weights": {"LDR_INI": 1.0, "COG_ADP": 0.7, "PSY_CON": 0.3},
+      "threshold": 0.45
+    }
+  ]
+}

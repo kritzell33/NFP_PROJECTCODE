@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nfp"
+version = "0.1.0"
+description = "New Frontier Project - Bayesian candidate assessment and mission simulation suite"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "BSD-2-Clause" }
+authors = [{ name = "Mike Kritzell" }]
+
+# Core runtime dependencies of the shippable Assessor.
+# Everything here is pure Python / numpy-based and freezes cleanly with PyInstaller.
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "matplotlib>=3.8",
+    "simpy>=4.1",          # discrete-event simulation backbone (mission clock)
+    "networkx>=3.2",       # crew relationship graphs
+    "transitions>=0.9",    # finite state machines for agent modes
+    "jinja2>=3.1",         # HTML report templating
+    "py_trees>=2.2",       # behavior trees (phase 2 - installed, not yet wired)
+    "mesa>=3.0",           # agent-based modeling framework (phase 2)
+    "fpdf2>=2.7",          # PDF export of reports (phase 2)
+]
+
+[project.optional-dependencies]
+# Desktop GUI shell (the .exe target)
+gui = [
+    "PySide6>=6.6",
+    "pyqtgraph>=0.13",     # fast live plotting for the sim dashboard (phase 2)
+]
+# Bayesian calibration workbench - NEVER shipped in the .exe.
+# Install these in a SEPARATE virtual environment (see calibration/README.md).
+calibration = [
+    "pymc>=5.10",
+    "arviz>=0.17",
+    "xarray>=2024.1",
+    "netcdf4>=1.6",
+    "jupyterlab>=4.0",
+]
+# Development tools
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "pyinstaller>=6.5",
+    "faker>=24.0",         # synthetic candidate generation for testing
+]
+
+[project.scripts]
+nfp = "nfp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"nfp.report" = ["templates/*.j2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

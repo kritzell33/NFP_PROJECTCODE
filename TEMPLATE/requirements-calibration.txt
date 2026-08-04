@@ -1,0 +1,9 @@
+# NFP Calibration Workbench - install in a SEPARATE venv (e.g. .venv-calib).
+# These packages compile model code at runtime and must never be part of
+# the PyInstaller build. See calibration/README.md.
+pymc>=5.10
+arviz>=0.17
+pandas>=2.1
+xarray>=2024.1
+netcdf4>=1.6
+jupyterlab>=4.0
